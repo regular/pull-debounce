@@ -19,6 +19,19 @@ function timedSource(data) {
     })
   )
 }
+
+pull(
+  timedSource([
+    [0,   0],
+    [250, 1],
+    [10,  2],
+    [250, 3],
+    [2000,4],
+    [10,  5]
+  ]),
+  debounce(200),
+  pull.log()
+)
 // => 0,2,3,5
 ```
 
