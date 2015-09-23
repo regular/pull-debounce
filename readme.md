@@ -1,11 +1,11 @@
 # pull-debounce
 [![NPM](https://nodei.co/npm/pull-debounce.png)](https://nodei.co/npm/pull-debounce/)
 
-`pull-debounce' is a through stream that can be used to debounce a stream of updates, i.e. frequent, overriding updates are being throttled to a desired frequency by dropping intermediate updates.
+`pull-debounce` is a through stream that can be used to debounce a stream of updates, i.e. frequent, overriding updates are being throttled to a desired frequency by dropping intermediate updates.
 
 ## Example
 
-``` ks
+``` js
 var pull = require('pull-stream')
 var debounce = require('pull-debounce')
 
