@@ -50,20 +50,24 @@ test('should pass through single item', function(t) {
   )
 })
 
-test('should pass through single item after timeout', function(t) {
+test.only('should pass through single item after timeout', function(t) {
+  var items = []
   pull(
     timedSource([
-      [250,   0],
+      [0,   0],
+      [2000,  1]
     ]),
     debounce(200),
-    pull.through(console.log.bind(console)),
-    pull.collect(function(end, arr) {
-      t.notOk(end)
-      t.deepEqual(arr, [0])
-      console.log(arr)
-      t.end();
-    })
+    pull.through(function(item) {
+      console.log(item)
+      items.push(item)
+    }),
+    pull.drain()
   )
+  setTimeout(function() {
+    t.equal(items.length, 1)
+    t.end()
+  }, 1000)
 })
 
 test('should pass through late last item', function(t) {
