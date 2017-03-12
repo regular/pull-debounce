@@ -1,12 +1,18 @@
-// jshint -W083
-var pull = require('pull-stream')
-var window = require('pull-window')
+'use strict';
 
-module.exports = function(time) {
-  return pull(
-    window.recent(null, time),
-    pull.map(function(item) {
-      return item.pop()
-    })
-  )
-}
+module.exports = function debounce (ms) {
+  let timeout = null;
+
+  return read => {
+    return function next (end, cb) {
+      read(end, function (end, data) {
+        clearTimeout(timeout);
+
+        if (end) return cb(end, data);
+
+        timeout = setTimeout(() => cb(end, data), ms);
+        return next(end, cb);
+      });
+    };
+  };
+};
