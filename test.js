@@ -28,7 +28,7 @@ test('should ignore frequent updates', function(t) {
     pull.collect(function(end, arr) {
       t.notOk(end)
       t.deepEqual(arr, [0,2,3,5])
-      console.log(arr)
+      //console.log(arr)
       t.end();
     })
   )
@@ -36,7 +36,7 @@ test('should ignore frequent updates', function(t) {
 
 test('should ignore even more frequent updates', function(t) {
   pull(
-    pull.values([
+    timedSource([
       [10,  5],
       [10,  6],
       [10,  7],
@@ -50,11 +50,6 @@ test('should ignore even more frequent updates', function(t) {
       [10, 19],
       [10, 20],
     ]),
-    pull.asyncMap(function(item, cb) {
-      setTimeout(function() {
-        cb(null, item[1])
-      }, item[0]);
-    }),
     debounce(40),
     pull.collect((err, arr) => {
       t.equal(err, null);
