@@ -50,7 +50,7 @@ test('should pass through single item', function(t) {
   )
 })
 
-test.only('should pass through single item after timeout', function(t) {
+test('should pass through single item after timeout', function(t) {
   var items = []
   pull(
     timedSource([
