@@ -37,7 +37,7 @@ pull(
 
 ## Credits
 
-Many thanks to @amsross, who provided valuable feedback, bug reports and code
+Many thanks to [@amsross](https://github.com/amsross), who provided valuable feedback, bug reports and code
 
 ## License
 MIT
