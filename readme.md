@@ -1,7 +1,7 @@
 # pull-debounce
 [![NPM](https://nodei.co/npm/pull-debounce.png)](https://nodei.co/npm/pull-debounce/)
 
-`pull-debounce` is a through stream that can be used to debounce a stream of updates, i.e. frequent, overriding updates are being throttled to a desired frequency by dropping intermediate updates.
+debounce for pull-streams
 
 ## Example
 
@@ -35,7 +35,9 @@ pull(
 // => 0,2,3,5
 ```
 
-This is a (very) thin layer on top of pull-window.
+## Credits
+
+Many thanks to @amsross, who provided valuable feedback, bug reports and code
 
 ## License
 MIT
