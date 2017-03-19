@@ -26,19 +26,18 @@ module.exports = function debounce (ms) {
         if (end) {
           // always emit last item
           ended = end;
-          return callback(candidate[0], candidate[1])
+          return callback(null, candidate)
         }
-        candidate = [end, data]
+        candidate = data
         if (timeoutWon) {
           timeoutWon = false
           if (!queue.length) return
         }
         clearTimeout(timeout);
-        if (end) return callback(end, data);
         
         timeout = setTimeout(function() {
           timeoutWon = true
-          callback(candidate[0], candidate[1]);
+          callback(null, candidate);
         }, ms)
 
         return next(end)
