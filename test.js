@@ -24,7 +24,7 @@ test('should ignore frequent updates', function(t) {
       [10,  5]
     ]),
     debounce(200),
-    pull.through(console.log.bind(console)),
+    //pull.through(console.log.bind(console)),
     pull.collect(function(end, arr) {
       t.notOk(end)
       t.deepEqual(arr, [0,2,3,5])
@@ -70,11 +70,11 @@ test('should pass through single item', function(t) {
       [0,   0],
     ]),
     debounce(200),
-    pull.through(console.log.bind(console)),
+    //pull.through(console.log.bind(console)),
     pull.collect(function(end, arr) {
       t.notOk(end)
       t.deepEqual(arr, [0])
-      console.log(arr)
+      //console.log(arr)
       t.end();
     })
   )
@@ -90,7 +90,7 @@ test('should pass through single item after timeout', function(t) {
     ]),
     debounce(200),
     pull.through(function(item) {
-      console.log(Date.now() - start, item)
+      //console.log(item)
       items.push(item)
     }),
     pull.drain()
@@ -113,7 +113,7 @@ test('should pass through late last item', function(t) {
     pull.collect(function(end, arr) {
       t.notOk(end)
       t.deepEqual(arr, [1,2])
-      console.log(arr)
+      //console.log(arr)
       t.end();
     })
   )
