@@ -13,7 +13,7 @@ function timedSource(data) {
   )
 }
 
-test('should ignore frquent updates', function(t) {
+test('should ignore frequent updates', function(t) {
   pull(
     timedSource([
       [0,   0],
@@ -52,14 +52,15 @@ test('should pass through single item', function(t) {
 
 test('should pass through single item after timeout', function(t) {
   var items = []
+  var start = Date.now();
   pull(
     timedSource([
-      [0,   0],
-      [2000,  1]
+      [0,    0],
+      [2000, 1]
     ]),
     debounce(200),
     pull.through(function(item) {
-      console.log(item)
+      console.log(Date.now() - start, item)
       items.push(item)
     }),
     pull.drain()
@@ -78,7 +79,7 @@ test('should pass through late last item', function(t) {
       [2000,2]
     ]),
     debounce(200),
-    pull.through(console.log.bind(console)),
+    //pull.through(console.log.bind(console)),
     pull.collect(function(end, arr) {
       t.notOk(end)
       t.deepEqual(arr, [1,2])
