@@ -1,55 +1,48 @@
 'use strict';
 
 module.exports = function debounce (ms) {
-  let timeout = null;
-  let queue = [];
-  let ended = false;
-  let readPending = false;
-  let candidate = null;
+  var timeout = null
+  var queue = []
+  var ended = false
+  var readPending = false
+  var candidate = null
 
   function callback(end, data) {
-    if (queue.length) {
-      queue.shift()(end, data);
-    }
+    if (queue.length) queue.shift()(end, data)
   }
 
-  return read => {
-    let timeoutWon = false;
+  return function(read) {
+    var timeoutWon = false
     return function next (end, cb) {
-      if (cb) {
-        queue.push(cb);
-      }
+      if (cb) queue.push(cb)
       if (ended) return callback(ended);
-      if (readPending) {
-        return;
-      }
+      if (readPending) return;
       if (end) return read(end, callback);
       ended = ended || end;
-      readPending = true;
+
+      readPending = true
       read(end, function (end, data) {
-        readPending = false;
+        readPending = false
         if (end) {
           // always emit last item
           ended = end;
-          return callback(candidate[0], candidate[1]);
+          return callback(candidate[0], candidate[1])
         }
-        candidate = [end, data];
+        candidate = [end, data]
         if (timeoutWon) {
-          timeoutWon = false;
-          if (queue.length === 0) return;
+          timeoutWon = false
+          if (!queue.length) return
         }
         clearTimeout(timeout);
-        if (end) {
-          return callback(end, data);
-        }
-
-        timeout = setTimeout(() => {
-          timeoutWon = true;
+        if (end) return callback(end, data);
+        
+        timeout = setTimeout(function() {
+          timeoutWon = true
           callback(candidate[0], candidate[1]);
-        }, ms);
+        }, ms)
 
-        return next(end);
-      });
-    };
-  };
-};
+        return next(end)
+      })
+    }
+  }
+}
