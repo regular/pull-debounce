@@ -34,6 +34,36 @@ test('should ignore frequent updates', function(t) {
   )
 })
 
+test('should ignore even more frequent updates', function(t) {
+  pull(
+    pull.values([
+      [10,  5],
+      [10,  6],
+      [10,  7],
+      [10,  8],
+      [10,  9],
+      [10, 10],
+      [50, 15],
+      [10, 16],
+      [10, 17],
+      [10, 18],
+      [10, 19],
+      [10, 20],
+    ]),
+    pull.asyncMap(function(item, cb) {
+      setTimeout(function() {
+        cb(null, item[1])
+      }, item[0]);
+    }),
+    debounce(40),
+    pull.collect((err, arr) => {
+      t.equal(err, null);
+      t.deepEqual(arr, [10, 20]);
+      t.end();
+    })
+  );
+})
+
 test('should pass through single item', function(t) {
   pull(
     timedSource([
